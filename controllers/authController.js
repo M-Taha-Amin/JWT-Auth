@@ -37,7 +37,9 @@ const loginUser = async (req, res) => {
       email: user.email,
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET);
-    res.cookie('access-token', token);
+    res.cookie('access-token', token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    });
     res.redirect('/profile');
   } catch (error) {
     res.status(500).json({ error });
